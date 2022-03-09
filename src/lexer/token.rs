@@ -211,7 +211,8 @@ pub enum Token {
   String(String),
 
   #[error]
-  #[token("\n", logos::skip)]
+  #[token("\r\n", logos::skip)]
+  #[regex(r"//[^\n]*", logos::skip)]
   #[regex(r"[ \t\n\f]+", logos::skip)]
   Error,
 }

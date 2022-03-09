@@ -2,6 +2,12 @@ use crate::lexer::token::Token;
 use logos::Logos;
 
 #[test]
+fn it_can_skip_comments() {
+  let mut lexer = Token::lexer("// foo");
+  assert_eq!(lexer.next(), None);
+}
+
+#[test]
 fn it_can_recognize_reserved_keywords() {
   let mut lexer = Token::lexer(
     "if else switch case for while loop in not in break continue func return false true null import export from as",
