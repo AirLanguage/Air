@@ -1,3 +1,6 @@
-func HelloWorld(): void {
+func HelloWorld(): void {   
   IO.Print('Hello World')
 }
+
+
+

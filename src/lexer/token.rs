@@ -1,5 +1,5 @@
 use crate::lexer::lexer::{to_float, to_int, to_string};
-use logos::Logos;
+use logos::{Logos, Skip};
 
 #[derive(Debug, Clone, Logos, PartialEq)]
 pub enum Token {
@@ -163,6 +163,8 @@ pub enum Token {
   ModulesExport,
   #[token("from")]
   ModulesFrom,
+  #[token("as")]
+  ModulesAs,
 
   /*
     import IO, Math, Strings, Utilities
@@ -184,6 +186,9 @@ pub enum Token {
   // TypeString,
   // TypeComplex,
   // TypeBool,
+  #[token("void")]
+  Void,
+
   #[token("false")]
   BoolFalse,
   #[token("true")]
@@ -201,10 +206,12 @@ pub enum Token {
   #[regex(r"([0-9]+[.])?[0-9]+", to_float)]
   Float(f64),
 
-  #[regex(r##""(?:[^"\\]|\\.)*""##, to_string)]
+  #[regex(r##""([^"]*)""##, to_string)]
+  #[regex(r##"'([^']*)'"##, to_string)]
   String(String),
 
   #[error]
+  #[token("\n", logos::skip)]
   #[regex(r"[ \t\n\f]+", logos::skip)]
   Error,
 }

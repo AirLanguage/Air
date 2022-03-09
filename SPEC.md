@@ -4,15 +4,22 @@
 
 let variable: float = 12.0
 
-func HelloWorld(): void {
+func HelloWorld() {
   IO.Print('Hello World')
 }
 
 if (a == b) {}
 
 switch a {
-  case b => {}
-  case c => {}
+  case b {}
+  case c {}
 }
+
+switch a {
+  b => {}
+  c => {}
+}
+
+
 ```
 

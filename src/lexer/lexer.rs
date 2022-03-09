@@ -1,5 +1,9 @@
 use crate::lexer::token::Token;
-use logos::Lexer;
+use logos::{Lexer, Logos};
+
+pub fn generate(input: &str) -> Vec<Token> {
+  Token::lexer(input).collect()
+}
 
 pub fn to_string(lex: &mut Lexer<Token>) -> Option<String> {
   let mut string: String = lex.slice().to_string();
@@ -8,11 +12,11 @@ pub fn to_string(lex: &mut Lexer<Token>) -> Option<String> {
     string.remove(0);
   }
 
-  if string.starts_with("\"") {
+  if string.starts_with("\"") | string.starts_with("'") {
     string.remove(0);
   }
 
-  if string.ends_with('"') {
+  if string.ends_with('"') | string.ends_with('\'') {
     string.remove(string.len() - 1);
   }
 

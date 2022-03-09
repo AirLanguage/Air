@@ -4,10 +4,34 @@ use logos::Logos;
 #[test]
 fn it_can_recognize_reserved_keywords() {
   let mut lexer = Token::lexer(
-    "if else switch case for while loop in not in break continue func return false true null",
+    "if else switch case for while loop in not in break continue func return false true null import export from as",
   );
 
-  assert_eq!(lexer.next(), Some(Token::FunctionFunc))
+  assert_eq!(lexer.next(), Some(Token::ConditionsIf));
+  assert_eq!(lexer.next(), Some(Token::ConditionsElse));
+  assert_eq!(lexer.next(), Some(Token::ConditionsSwitch));
+  assert_eq!(lexer.next(), Some(Token::ConditionsCase));
+
+  assert_eq!(lexer.next(), Some(Token::LoopFor));
+  assert_eq!(lexer.next(), Some(Token::LoopWhile));
+  assert_eq!(lexer.next(), Some(Token::LoopInf));
+  assert_eq!(lexer.next(), Some(Token::LoopIn));
+  assert_eq!(lexer.next(), Some(Token::LoopNotIn));
+  assert_eq!(lexer.next(), Some(Token::LoopBreak));
+  assert_eq!(lexer.next(), Some(Token::LoopContinue));
+
+  assert_eq!(lexer.next(), Some(Token::FunctionFunc));
+  assert_eq!(lexer.next(), Some(Token::FunctionReturn));
+
+  assert_eq!(lexer.next(), Some(Token::BoolFalse));
+  assert_eq!(lexer.next(), Some(Token::BoolTrue));
+
+  assert_eq!(lexer.next(), Some(Token::Null));
+
+  assert_eq!(lexer.next(), Some(Token::ModulesImport));
+  assert_eq!(lexer.next(), Some(Token::ModulesExport));
+  assert_eq!(lexer.next(), Some(Token::ModulesFrom));
+  assert_eq!(lexer.next(), Some(Token::ModulesAs));
 }
 
 #[test]
@@ -101,11 +125,8 @@ fn it_can_recognise_numbers() {
 
 #[test]
 fn it_can_recognise_strings() {
-  let mut lexer = Token::lexer(r##""TypeScript" "Go" "C#" "C++""##);
-  assert_eq!(
-    lexer.next(),
-    Some(Token::String(r##"TypeScript"##.to_owned()))
-  );
+  let mut lexer = Token::lexer(r##""TS" 'Go' "C#" 'C++'"##);
+  assert_eq!(lexer.next(), Some(Token::String(r##"TS"##.to_owned())));
   assert_eq!(lexer.next(), Some(Token::String(r##"Go"##.to_owned())));
   assert_eq!(lexer.next(), Some(Token::String(r##"C#"##.to_owned())));
   assert_eq!(lexer.next(), Some(Token::String(r##"C++"##.to_owned())));

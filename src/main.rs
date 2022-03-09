@@ -3,7 +3,9 @@ mod lexer;
 mod tests;
 
 use clap::{Arg, Command};
-// use std::fs::read_to_string;
+use std::fs::read_to_string;
+
+use lexer::lexer::generate;
 
 const VERSION: &str = "0.1-beta";
 
@@ -27,35 +29,22 @@ fn main() {
         )
         .get_matches();
 
-    // if let Some(ref run) = matches.subcommand_matches("run") {
-    //     let file = run.value_of("file").unwrap();
-    //     let path = std::path::PathBuf::from(file);
-    //     let contents = read_to_string(file).unwrap();
-    //     let tokens = generate(contents.as_str());
+    if let Some(ref run) = matches.subcommand_matches("run") {
+        let file = run.value_of("file").unwrap();
+        let path = std::path::PathBuf::from(file);
+        let contents = read_to_string(file).unwrap();
+        let tokens = generate(contents.as_str());
 
-    //     match parse(tokens) {
-    //         Ok(ast) => {
-    //             match interpret(ast, path) {
-    //                 Ok(_) => {}
-    //                 Err(e) => e.print(),
-    //             };
-    //         }
-    //         Err(e) => e.print(),
-    //     };
-    // } else if let Some(ref js) = matches.subcommand_matches("js") {
-    //     let file = js.value_of("file").unwrap();
-    //     let contents = read_to_string(file).unwrap();
-    //     let output = js.value_of("output").unwrap();
-    //     let tokens = generate(contents.as_str());
+        dbg!(tokens);
 
-    //     match parse(tokens) {
-    //         Ok(ast) => {
-    //             match cmd::js(ast, output) {
-    //                 Ok(_) => {}
-    //                 Err(e) => e.print(),
-    //             };
-    //         }
-    //         Err(e) => e.print(),
-    //     };
-    // }
+        // match parse(tokens) {
+        //     Ok(ast) => {
+        //         match interpret(ast, path) {
+        //             Ok(_) => {}
+        //             Err(e) => e.print(),
+        //         };
+        //     }
+        //     Err(e) => e.print(),
+        // };
+    };
 }
