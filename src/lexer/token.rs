@@ -3,6 +3,13 @@ use logos::Logos;
 
 #[derive(Debug, Clone, Logos, PartialEq)]
 pub enum Token {
+  /* ------------------------ COMMON ------------------------ */
+  #[token(",")]
+  Comma,
+  #[token(":")]
+  Colon,
+  #[token(".")]
+  Dot,
   /* ------------------------ BRACKETS ------------------------ */
   #[token("(")]
   BracketLeft,
@@ -19,17 +26,17 @@ pub enum Token {
 
   /* ------------------------ OPERATORS ------------------------ */
   #[token("+")]
-  OperatorAddition,
+  OperatorPlus,
   #[token("-")]
-  OperatorSubtraction,
+  OperatorMinus,
   #[token("*")]
-  OperatorMultiplication,
+  OperatorMulti,
   #[token("**")]
-  OperatorExponentiation,
+  OperatorPower,
   #[token("/")]
-  OperatorDivision,
+  OperatorSlash,
   #[token("%")]
-  OperatorModulus,
+  OperatorPercent,
   #[token("++")]
   OperatorIncrement,
   #[token("--")]
@@ -59,9 +66,9 @@ pub enum Token {
   OperatorGreater,
   #[token("<")]
   OperatorLesser,
-  #[token("<=")]
-  OperatorGreaterOrEqual,
   #[token(">=")]
+  OperatorGreaterOrEqual,
+  #[token("<=")]
   OperatorLesserOrEqual,
   #[token("&&")]
   OperatorAnd,
@@ -110,26 +117,11 @@ pub enum Token {
   OperatorRange,
   #[token("...")]
   OperatorSpread,
-  #[token(":")]
-  OperatorInheritance,
-  // OperatorUnderscore,
+  #[token("_")]
+  OperatorUnderscore,
   // OperatorNullable,
   // OperatorNullForgiving,
   // OperatorTypeOf, // typeof || ?|>
-
-  /* ------------------------ DATA TYPES ------------------------ */
-  // Simple data types
-  // TypeChar,
-  // TypeString,
-  // TypeComplex,
-  // TypeBool,
-  #[token("false")]
-  TypeBoolFalse,
-  #[token("true")]
-  TypeBoolTrue,
-  // TypeNull,
-  // Complex data types
-  // Array,
 
   /* ----------------------- CONDITIONS  ----------------------- */
   #[token("if")]
@@ -143,11 +135,13 @@ pub enum Token {
 
   /* ------------------------    LOOP    ------------------------ */
   #[token("for")]
-  LoopFor, // for (let i = 0; i < n; i++) {}
-  // LopForOf,  // for (let i of array) {}
-  // LoopForIn, // for (let i in object) {}
+  LoopFor,
+  #[token("in")]
+  LoopIn,
+  #[token("not in")]
+  LoopNotIn,
   #[token("while")]
-  LoopWhile, // while (i < n) {}
+  LoopWhile,
   #[token("loop")]
   LoopInf,
   #[token("break")]
@@ -159,7 +153,45 @@ pub enum Token {
   #[token("func")]
   FunctionFunc,
 
-  /* ------------------------  Others  ------------------------ */
+  #[token("return")]
+  FunctionReturn,
+
+  /* ------------------------  MODULES  ------------------------ */
+  #[token("import")]
+  ModulesImport,
+  #[token("export")]
+  ModulesExport,
+  #[token("from")]
+  ModulesFrom,
+
+  /*
+    import IO, Math, Strings, Utilities
+    ? When no quotes, imports standard libs
+    import "world"
+    import * from "world"
+    ? Both forms are equivalent and allow you to import full module from world.air
+    ? If you want to use variable hello from world module type world.hello
+    ! Important - import files relative to the air.module file
+    import { hello, hi, wellcome } from "world"
+    ? If you want to import only few variables you can do something like that
+    ? It imports hello variable (must have export keyword) from world.air file
+    ? if you want to use variable you still need to type world.variable
+  */
+
+  /* ------------------------ DATA TYPES ------------------------ */
+  // Simple data types
+  // TypeChar,
+  // TypeString,
+  // TypeComplex,
+  // TypeBool,
+  #[token("false")]
+  BoolFalse,
+  #[token("true")]
+  BoolTrue,
+
+  #[token("null")]
+  Null,
+
   #[regex(r"[a-zA-Z_]+", to_string)]
   Identifier(String),
 
@@ -168,6 +200,9 @@ pub enum Token {
 
   #[regex(r"([0-9]+[.])?[0-9]+", to_float)]
   Float(f64),
+
+  #[regex(r##""(?:[^"\\]|\\.)*""##, to_string)]
+  String(String),
 
   #[error]
   #[regex(r"[ \t\n\f]+", logos::skip)]

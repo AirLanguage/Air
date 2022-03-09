@@ -2,7 +2,21 @@ use crate::lexer::token::Token;
 use logos::Lexer;
 
 pub fn to_string(lex: &mut Lexer<Token>) -> Option<String> {
-  Some(lex.slice().to_string())
+  let mut string: String = lex.slice().to_string();
+
+  if string.starts_with("$") {
+    string.remove(0);
+  }
+
+  if string.starts_with("\"") {
+    string.remove(0);
+  }
+
+  if string.ends_with('"') {
+    string.remove(string.len() - 1);
+  }
+
+  Some(string)
 }
 
 pub fn to_int(lex: &mut Lexer<Token>) -> Option<i64> {
