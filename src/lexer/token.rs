@@ -1,5 +1,5 @@
-use crate::lexer::lexer::{to_float, to_int, to_string};
-use logos::{Logos, Skip};
+use crate::lexer::lexer::{to_char, to_float, to_int, to_string};
+use logos::Logos;
 
 #[derive(Debug, Clone, Logos, PartialEq)]
 pub enum Token {
@@ -121,7 +121,18 @@ pub enum Token {
   OperatorUnderscore,
   // OperatorNullable,
   // OperatorNullForgiving,
-  // OperatorTypeOf, // typeof || ?|>
+  #[token("typeof")]
+  OperatorTypeOf,
+  #[token("sizeof")]
+  OperatorSizeOf,
+
+  /* ----------------------- VARIABLES  ----------------------- */
+  #[token("var")]
+  VariablesVar,
+  #[token("let")]
+  VariablesLet,
+  #[token("const")]
+  VariablesConst,
 
   /* ----------------------- CONDITIONS  ----------------------- */
   #[token("if")]
@@ -156,6 +167,38 @@ pub enum Token {
   #[token("return")]
   FunctionReturn,
 
+  /* ------------------------  OBJECTS  ------------------------ */
+  #[token("class")]
+  ObjectsClass,
+  #[token("struct")]
+  ObjectsStruct,
+  #[token("interface")]
+  ObjectsInterface,
+  #[token("enum")]
+  ObjectsEnum,
+  #[token("new")]
+  ObjectsNew,
+  #[token("static")]
+  ObjectsStatic,
+  #[token("public")]
+  ObjectsPublic,
+  #[token("readonly")]
+  ObjectsReadonly,
+  #[token("private")]
+  ObjectsPrivate,
+  #[token("this")]
+  This,
+
+  /* ------------------------  ERRORS  ------------------------ */
+  #[token("try")]
+  ErrorsTry,
+  #[token("catch")]
+  ErrorsCatch,
+  #[token("finally")]
+  ErrorsFinally,
+  #[token("throw")]
+  ErrorsThrow,
+
   /* ------------------------  MODULES  ------------------------ */
   #[token("import")]
   ModulesImport,
@@ -181,19 +224,27 @@ pub enum Token {
   */
 
   /* ------------------------ DATA TYPES ------------------------ */
-  // Simple data types
-  // TypeChar,
-  // TypeString,
-  // TypeComplex,
-  // TypeBool,
   #[token("void")]
-  Void,
+  TypeVoid,
+  #[token("char")]
+  TypeChar,
+  #[token("string")]
+  TypeString,
+  #[token("int")]
+  TypeInt,
+  #[token("float")]
+  TypeFloat,
+  #[token("bool")]
+  TypeBool,
 
+  // FUNCTION, DECORATOR
+  // ARRAY, TUPPLE, MAP, OBJECT
+
+  /* ------------------------ OTHERS ------------------------ */
   #[token("false")]
-  BoolFalse,
+  False,
   #[token("true")]
-  BoolTrue,
-
+  True,
   #[token("null")]
   Null,
 
@@ -205,6 +256,10 @@ pub enum Token {
 
   #[regex(r"([0-9]+[.])?[0-9]+", to_float)]
   Float(f64),
+
+  #[regex(r"'[^ \n\t\f]'", to_char)]
+  #[regex(r##""[^ \n\t\f]""##, to_char)]
+  Char(char),
 
   #[regex(r##""([^"]*)""##, to_string)]
   #[regex(r##"'([^']*)'"##, to_string)]

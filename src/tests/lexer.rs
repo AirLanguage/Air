@@ -29,8 +29,8 @@ fn it_can_recognize_reserved_keywords() {
   assert_eq!(lexer.next(), Some(Token::FunctionFunc));
   assert_eq!(lexer.next(), Some(Token::FunctionReturn));
 
-  assert_eq!(lexer.next(), Some(Token::BoolFalse));
-  assert_eq!(lexer.next(), Some(Token::BoolTrue));
+  assert_eq!(lexer.next(), Some(Token::False));
+  assert_eq!(lexer.next(), Some(Token::True));
 
   assert_eq!(lexer.next(), Some(Token::Null));
 
@@ -130,10 +130,20 @@ fn it_can_recognise_numbers() {
 }
 
 #[test]
+fn it_can_recognise_chars() {
+  let mut lexer = Token::lexer(" 'a' 'b' 'c' 'de' 'f' ");
+  assert_eq!(lexer.next(), Some(Token::Char('a')));
+  assert_eq!(lexer.next(), Some(Token::Char('b')));
+  assert_eq!(lexer.next(), Some(Token::Char('c')));
+  assert_eq!(lexer.next(), Some(Token::String("de".to_owned())));
+  assert_eq!(lexer.next(), Some(Token::Char('f')));
+}
+
+#[test]
 fn it_can_recognise_strings() {
   let mut lexer = Token::lexer(r##""TS" 'Go' "C#" 'C++'"##);
-  assert_eq!(lexer.next(), Some(Token::String(r##"TS"##.to_owned())));
-  assert_eq!(lexer.next(), Some(Token::String(r##"Go"##.to_owned())));
-  assert_eq!(lexer.next(), Some(Token::String(r##"C#"##.to_owned())));
-  assert_eq!(lexer.next(), Some(Token::String(r##"C++"##.to_owned())));
+  assert_eq!(lexer.next(), Some(Token::String("TS".to_owned())));
+  assert_eq!(lexer.next(), Some(Token::String("Go".to_owned())));
+  assert_eq!(lexer.next(), Some(Token::String("C#".to_owned())));
+  assert_eq!(lexer.next(), Some(Token::String("C++".to_owned())));
 }

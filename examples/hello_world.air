@@ -1,14 +1,3 @@
 func HelloWorld(): void {   
   IO.Print('Hello World')
 }
-
-
-
-// HIDE ME
-
-
-
-
-
-
-

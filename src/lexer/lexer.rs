@@ -23,6 +23,12 @@ pub fn to_string(lex: &mut Lexer<Token>) -> Option<String> {
   Some(string)
 }
 
+pub fn to_char(lex: &mut Lexer<Token>) -> Option<char> {
+  let char: char = lex.slice().to_string().chars().nth(1).unwrap();
+
+  Some(char)
+}
+
 pub fn to_int(lex: &mut Lexer<Token>) -> Option<i64> {
   let slice = lex.slice();
   let i: i64 = slice.parse().ok()?;
