@@ -12,7 +12,7 @@ let person = {
 }
 
 person.interests.push('Physics')    // You can change properties
-// person.born = 'London'           // But you can't change the structure of variable !!!
+// person.born = 'London'           // But you can't change the structure of variable
 
 // Declare "const" variable
 const pi = 3.14

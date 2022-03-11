@@ -1,4 +1,4 @@
-use crate::lexer::token::Token;
+use air::lexer::token::Token;
 use logos::Logos;
 
 #[test]

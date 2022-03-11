@@ -1,11 +1,7 @@
-mod cmd;
-mod lexer;
-mod tests;
-
 use clap::{Arg, Command};
 use std::fs::read_to_string;
 
-use lexer::lexer::generate;
+use air::lexer::lexer::generate;
 
 const VERSION: &str = "0.1-beta";
 
@@ -31,7 +27,7 @@ fn main() {
 
     if let Some(ref run) = matches.subcommand_matches("run") {
         let file = run.value_of("file").unwrap();
-        let path = std::path::PathBuf::from(file);
+        // let path = std::path::PathBuf::from(file);
         let contents = read_to_string(file).unwrap();
         let tokens = generate(contents.as_str());
 
