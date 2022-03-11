@@ -167,6 +167,11 @@ pub enum Token {
   #[token("return")]
   FunctionReturn,
 
+  #[token("async")]
+  FunctionAsync,
+  #[token("await")]
+  FunctionAwait,
+
   /* ------------------------  OBJECTS  ------------------------ */
   #[token("class")]
   ObjectsClass,
@@ -178,6 +183,8 @@ pub enum Token {
   ObjectsEnum,
   #[token("new")]
   ObjectsNew,
+  #[token("super")]
+  ObjectsSuper,
   #[token("static")]
   ObjectsStatic,
   #[token("public")]
